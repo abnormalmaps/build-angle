@@ -73,11 +73,13 @@ if not exist ..\build\windows\arm64\include mkdir ..\build\windows\arm64\include
 
 :: Create header directories
 if not exist ..\build\windows\x64\include\EGL mkdir ..\build\windows\x64\include\EGL
+if not exist ..\build\windows\x64\include\GLES mkdir ..\build\windows\x64\include\GLES
 if not exist ..\build\windows\x64\include\GLES2 mkdir ..\build\windows\x64\include\GLES2
 if not exist ..\build\windows\x64\include\GLES3 mkdir ..\build\windows\x64\include\GLES3
 if not exist ..\build\windows\x64\include\KHR mkdir ..\build\windows\x64\include\KHR
 
 if not exist ..\build\windows\arm64\include\EGL mkdir ..\build\windows\arm64\include\EGL
+if not exist ..\build\windows\arm64\include\GLES mkdir ..\build\windows\arm64\include\GLES
 if not exist ..\build\windows\arm64\include\GLES2 mkdir ..\build\windows\arm64\include\GLES2
 if not exist ..\build\windows\arm64\include\GLES3 mkdir ..\build\windows\arm64\include\GLES3
 if not exist ..\build\windows\arm64\include\KHR mkdir ..\build\windows\arm64\include\KHR
@@ -85,11 +87,13 @@ if not exist ..\build\windows\arm64\include\KHR mkdir ..\build\windows\arm64\inc
 :: Copy headers for both architectures
 echo Copying headers...
 xcopy /Y include\EGL\*.h ..\build\windows\x64\include\EGL\
+xcopy /Y include\GLES\*.h ..\build\windows\x64\include\GLES\
 xcopy /Y include\GLES2\*.h ..\build\windows\x64\include\GLES2\
 xcopy /Y include\GLES3\*.h ..\build\windows\x64\include\GLES3\
 xcopy /Y include\KHR\*.h ..\build\windows\x64\include\KHR\
 
 xcopy /Y include\EGL\*.h ..\build\windows\arm64\include\EGL\
+xcopy /Y include\GLES\*.h ..\build\windows\arm64\include\GLES\
 xcopy /Y include\GLES2\*.h ..\build\windows\arm64\include\GLES2\
 xcopy /Y include\GLES3\*.h ..\build\windows\arm64\include\GLES3\
 xcopy /Y include\KHR\*.h ..\build\windows\arm64\include\KHR\
@@ -102,7 +106,7 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b 1
 )
 
-call ninja -C out/windows-x64 libEGL libGLESv2
+call ninja -C out/windows-x64 libEGL libGLESv2 libGLESv1_CM
 if %ERRORLEVEL% NEQ 0 (
     echo Failed to build x64 version. Exiting.
     exit /b 1
@@ -112,8 +116,10 @@ if %ERRORLEVEL% NEQ 0 (
 echo Copying x64 files to build directory...
 copy /Y out\windows-x64\libEGL.dll ..\build\windows\x64\bin\
 copy /Y out\windows-x64\libGLESv2.dll ..\build\windows\x64\bin\
+copy /Y out\windows-x64\libGLESv1_CM.dll ..\build\windows\x64\bin\
 copy /Y out\windows-x64\libEGL.dll.lib ..\build\windows\x64\lib\libEGL.lib
 copy /Y out\windows-x64\libGLESv2.dll.lib ..\build\windows\x64\lib\libGLESv2.lib
+copy /Y out\windows-x64\libGLESv1_CM.dll.lib ..\build\windows\x64\lib\libGLESv1_CM.lib
 
 :: Copy d3dcompiler_47.dll for x64
 echo Copying d3dcompiler_47.dll for x64...
@@ -136,7 +142,7 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b 1
 )
 
-call ninja -C out/windows-arm64 libEGL libGLESv2
+call ninja -C out/windows-arm64 libEGL libGLESv2 libGLESv1_CM
 if %ERRORLEVEL% NEQ 0 (
     echo Failed to build ARM64 version. Exiting.
     exit /b 1
@@ -146,8 +152,10 @@ if %ERRORLEVEL% NEQ 0 (
 echo Copying ARM64 files to build directory...
 copy /Y out\windows-arm64\libEGL.dll ..\build\windows\arm64\bin\
 copy /Y out\windows-arm64\libGLESv2.dll ..\build\windows\arm64\bin\
+copy /Y out\windows-arm64\libGLESv1_CM.dll ..\build\windows\arm64\bin\
 copy /Y out\windows-arm64\libEGL.dll.lib ..\build\windows\arm64\lib\libEGL.lib
 copy /Y out\windows-arm64\libGLESv2.dll.lib ..\build\windows\arm64\lib\libGLESv2.lib
+copy /Y out\windows-arm64\libGLESv1_CM.dll.lib ..\build\windows\arm64\lib\libGLESv1_CM.lib
 
 :: Copy d3dcompiler_47.dll for ARM64
 echo Copying d3dcompiler_47.dll for ARM64...

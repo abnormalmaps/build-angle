@@ -56,7 +56,7 @@ gn gen out/ios-release-arm64 --args="
     target_environment=\"device\"
     $COMMON_ARGS
 "
-ninja -C out/ios-release-arm64 libEGL libGLESv2
+ninja -C out/ios-release-arm64 libEGL libGLESv2 libGLESv1_CM
 
 # Copy the frameworks to build directory
 rm -rf ../build/ios/arm64/*
@@ -71,7 +71,7 @@ gn gen out/ios-release-simulator-arm64 --args="
     target_environment=\"simulator\"
     $COMMON_ARGS
 "
-ninja -C out/ios-release-simulator-arm64 libEGL libGLESv2
+ninja -C out/ios-release-simulator-arm64 libEGL libGLESv2 libGLESv1_CM
 
 # Copy the frameworks to build directory
 rm -rf ../build/ios/simulator-arm64/*
@@ -86,7 +86,7 @@ gn gen out/ios-release-simulator-x86_64 --args="
     target_environment=\"simulator\"
     $COMMON_ARGS
 "
-ninja -j 10 -k1 -C out/ios-release-simulator-x86_64 libEGL libGLESv2
+ninja -j 10 -k1 -C out/ios-release-simulator-x86_64 libEGL libGLESv2 libGLESv1_CM
 
 # Copy the frameworks to build directory
 rm -rf ../build/ios/simulator-x86_64/*
@@ -164,6 +164,8 @@ for FRAMEWORK in $FRAMEWORKS; do
                     cp -R angle/include/GLES2/*.h "$HEADERS_DIR_TARGET/"
                     cp -R angle/include/GLES3/*.h "$HEADERS_DIR_TARGET/"
                     cp -R angle/include/KHR/*.h "$HEADERS_DIR_TARGET/"
+                elif [[ "$FRAMEWORK_BASE" == "libGLESv1_CM" ]]; then
+                    cp -R angle/include/GLES/*.h "$HEADERS_DIR_TARGET/"
                 fi
 
                 echo "Added headers to $FRAMEWORK_DIR"

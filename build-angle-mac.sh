@@ -54,7 +54,7 @@ gn gen out/mac-release-arm64 --args="
     target_cpu=\"arm64\"
     $COMMON_ARGS
 "
-ninja -C out/mac-release-arm64 libEGL libGLESv2
+ninja -C out/mac-release-arm64 libEGL libGLESv2 libGLESv1_CM
 
 # Create new directory structure
 rm -rf ../build/mac/arm64/lib
@@ -68,7 +68,7 @@ gn gen out/mac-release-x86_64 --args="
     target_cpu=\"x64\"
     $COMMON_ARGS
 "
-ninja -C out/mac-release-x86_64 libEGL libGLESv2
+ninja -C out/mac-release-x86_64 libEGL libGLESv2 libGLESv1_CM
 
 # Create new directory structure
 rm -rf ../build/mac/x86_64/lib
@@ -101,22 +101,25 @@ done
 echo "Copying headers..."
 
 # Create header directories for each architecture
-mkdir -p build/mac/arm64/include/{EGL,GLES2,GLES3,KHR}
-mkdir -p build/mac/x86_64/include/{EGL,GLES2,GLES3,KHR}
-mkdir -p build/mac/universal/include/{EGL,GLES2,GLES3,KHR}
+mkdir -p build/mac/arm64/include/{EGL,GLES,GLES2,GLES3,KHR}
+mkdir -p build/mac/x86_64/include/{EGL,GLES,GLES2,GLES3,KHR}
+mkdir -p build/mac/universal/include/{EGL,GLES,GLES2,GLES3,KHR}
 
 # Copy headers to each architecture directory
 cp -R angle/include/EGL/*.h build/mac/arm64/include/EGL/
+cp -R angle/include/GLES/*.h build/mac/arm64/include/GLES/
 cp -R angle/include/GLES2/*.h build/mac/arm64/include/GLES2/
 cp -R angle/include/GLES3/*.h build/mac/arm64/include/GLES3/
 cp -R angle/include/KHR/*.h build/mac/arm64/include/KHR/
 
 cp -R angle/include/EGL/*.h build/mac/x86_64/include/EGL/
+cp -R angle/include/GLES/*.h build/mac/x86_64/include/GLES/
 cp -R angle/include/GLES2/*.h build/mac/x86_64/include/GLES2/
 cp -R angle/include/GLES3/*.h build/mac/x86_64/include/GLES3/
 cp -R angle/include/KHR/*.h build/mac/x86_64/include/KHR/
 
 cp -R angle/include/EGL/*.h build/mac/universal/include/EGL/
+cp -R angle/include/GLES/*.h build/mac/universal/include/GLES/
 cp -R angle/include/GLES2/*.h build/mac/universal/include/GLES2/
 cp -R angle/include/GLES3/*.h build/mac/universal/include/GLES3/
 cp -R angle/include/KHR/*.h build/mac/universal/include/KHR/
