@@ -42,7 +42,8 @@ COMMON_ARGS='
 
     # Optimize for size
     symbol_level=0
-    strip_debug_info=true
+    # gn gets fussy if you try to strip android builds
+    strip_debug_info=false
     angle_enable_trace=false
 '
 
