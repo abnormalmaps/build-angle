@@ -98,7 +98,7 @@ solutions = [
     "managed": False,
   },
 ]
-target_os = android
+target_os = ['android', 'linux']
 EOL
 
 echo "Syncing ANGLE dependencies with gclient..."
