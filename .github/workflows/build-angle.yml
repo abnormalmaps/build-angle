@@ -278,7 +278,7 @@ jobs:
 
       - name: Make Scripts Executable
         run: |
-          chmod +x setup-angle-ubuntu.sh
+          chmod +x setup-angle-android.sh
           chmod +x build-angle-android.sh
 
       - name: Build ANGLE for Android with specific commit
