@@ -78,9 +78,25 @@ cp -R out/android-arm/*.so ../build/android/arm/lib/
 
 cd ..
 
+# Build for Android x64
+echo "Building ANGLE for Android x64..."
+gn gen out/android-x64 --args="
+    target_os=\"android\"
+    target_cpu=\"x64\"
+    $COMMON_ARGS
+"
+
+ninja -C out/android-x64 libEGL libGLESv2 libGLESv1_CM
+
+# Create new directory structure
+rm -rf ../build/android/x64/lib
+mkdir -p ../build/android/x64/lib
+cp -R out/android-x64/*.so ../build/android/x64/lib/
+
 # Create header directories for each architecture
 mkdir -p build/android/arm64/include/{EGL,GLES,GLES2,GLES3,KHR}
 mkdir -p build/android/arm/include/{EGL,GLES,GLES2,GLES3,KHR}
+mkdir -p build/android/64/include/{EGL,GLES,GLES2,GLES3,KHR}
 
 # Copy headers to each architecture directory
 cp -R angle/include/EGL/*.h build/android/arm64/include/EGL/
@@ -95,7 +111,14 @@ cp -R angle/include/GLES2/*.h build/android/arm/include/GLES2/
 cp -R angle/include/GLES3/*.h build/android/arm/include/GLES3/
 cp -R angle/include/KHR/*.h build/android/arm/include/KHR/
 
+cp -R angle/include/EGL/*.h build/android/x64/include/EGL/
+cp -R angle/include/GLES/*.h build/android/x64/include/GLES/
+cp -R angle/include/GLES2/*.h build/android/x64/include/GLES2/
+cp -R angle/include/GLES3/*.h build/android/x64/include/GLES3/
+cp -R angle/include/KHR/*.h build/android/x64/include/KHR/
+
 echo "Android builds complete! Libraries are available in:"
 echo "  - build/android/arm64/lib (for arm64)"
 echo "  - build/android/arm/lib (for arm)"
+echo "  - build/android/x64/lib (for x64)"
 echo "Headers are included in the include directory within each build folder."

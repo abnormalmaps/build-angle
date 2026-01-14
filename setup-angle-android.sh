@@ -104,9 +104,9 @@ EOL
 echo "Syncing ANGLE dependencies with gclient..."
 gclient sync --no-history --with_branch_heads --noprehooks
 
-# run install script
-# TODO: oh my god bruh 🥀
-#./build/install-build-deps.sh
+# We aren't running the dependencies install script, since we don't need to.
+# If we did, we wouldn't be able to run it on github runners,
+# since ANGLE + all the deps uses too much disk space.
 
 echo "ANGLE setup complete!"
 cd ..

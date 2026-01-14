@@ -294,6 +294,8 @@ jobs:
           ls -la build/android/arm64/include/
           ls -la build/android/arm/lib/
           ls -la build/android/arm/include/
+          ls -la build/android/x64/lib/
+          ls -la build/android/x64/include/
 
       - name: Create Android Archive
         run: |
@@ -304,6 +306,7 @@ jobs:
           cd build/android
           zip -r ../angle-android-arm64.zip arm64
           zip -r ../angle-android-arm.zip arm
+          zip -r ../angle-android-x64.zip x64
           cd ..
 
       - name: Upload Android ARM64 Archive
@@ -318,6 +321,13 @@ jobs:
         with:
           name: angle-android-arm
           path: build/angle-android-arm.zip
+          retention-days: 7
+
+      - name: Upload Android x64 Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: angle-android-x64
+          path: build/angle-android-x64.zip
           retention-days: 7
   publish-release:
     name: Publish GitHub Release
@@ -346,6 +356,9 @@ jobs:
           find artifacts/angle-ios-universal -name "*.zip" -exec cp {} release-assets/angle-ios-universal.zip \;
           find artifacts/angle-windows-x64 -name "*.zip" -exec cp {} release-assets/angle-windows-x64.zip \;
           find artifacts/angle-windows-arm64 -name "*.zip" -exec cp {} release-assets/angle-windows-arm64.zip \;
+          find artifacts/angle-android-arm64 -name "*.zip" -exec cp {} release-assets/angle-android-arm64.zip \;
+          find artifacts/angle-android-arm -name "*.zip" -exec cp {} release-assets/angle-android-arm.zip \;
+          find artifacts/angle-android-x64 -name "*.zip" -exec cp {} release-assets/angle-android-x64.zip \;
 
           # Create a separate commit.txt file
           echo "${{ needs.get-angle-commit.outputs.angle_commit }}" > release-assets/commit.txt
@@ -377,6 +390,7 @@ jobs:
             "release-assets/angle-windows-arm64.zip"
             "release-assets/angle-android-arm64.zip"
             "release-assets/angle-android-arm.zip"
+            "release-assets/angle-android-x64.zip"
             "release-assets/commit.txt"
           )
 
@@ -391,5 +405,5 @@ jobs:
             - macOS (Universal)
             - iOS (ARM64 device + ARM64/x86_64 simulator)
             - Windows (x64 and ARM64)
-            - Android (ARM and ARM64)" \
+            - Android (ARM64, ARM, and x64)" \
             ${RELEASE_FILES[@]}
