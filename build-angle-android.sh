@@ -7,7 +7,7 @@ cd "$SCRIPT_DIR"
 
 # Setup ANGLE if needed
 if [ ! -d "angle" ]; then
-    source ./setup-angle-ubuntu.sh
+    source ./setup-angle-android.sh
 else
     # Add depot_tools to PATH
     export PATH="$PATH:$SCRIPT_DIR/depot_tools"
