@@ -5,17 +5,21 @@ set -e
 ANGLE_COMMIT=${ANGLE_COMMIT:-""}
 DEPOT_TOOLS_COMMIT=${DEPOT_TOOLS_COMMIT:-""}
 
-# Check if homebrew is installed
-if ! command -v brew &> /dev/null; then
-    echo "Homebrew is not installed. Please install it first:"
-    echo "/bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+if ! command -v apt &> /dev/null; then
+    echo "This script is only designed for apt-based systems."
     exit 1
 fi
 
-# Install ninja if not available
-if ! command -v ninja &> /dev/null; then
-    echo "Installing ninja..."
-    brew install ninja
+# Install python3 if not available
+if ! command -v python3 &> /dev/null; then
+    echo "Installing python..."
+    sudo apt install python3
+fi
+
+# Install python3 if not available
+if ! command -v git &> /dev/null; then
+    echo "Installing git..."
+    sudo apt install git
 fi
 
 # Get current directory
@@ -94,10 +98,15 @@ solutions = [
     "managed": False,
   },
 ]
+target_os = ['android']
 EOL
 
 echo "Syncing ANGLE dependencies with gclient..."
 gclient sync --no-history --with_branch_heads --noprehooks
+
+# We aren't running the dependencies install script, since we don't need to.
+# If we did, we wouldn't be able to run it on github runners,
+# since ANGLE + all the deps uses too much disk space.
 
 echo "ANGLE setup complete!"
 cd ..
