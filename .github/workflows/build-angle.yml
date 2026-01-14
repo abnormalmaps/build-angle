@@ -310,14 +310,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: angle-android-arm64
-          path: build/android/angle-android-arm64.zip
+          path: build/angle-android-arm64.zip
           retention-days: 7
 
       - name: Upload Android ARM Archive
         uses: actions/upload-artifact@v4
         with:
           name: angle-android-arm
-          path: build/android/angle-android-arm.zip
+          path: build/angle-android-arm.zip
           retention-days: 7
   publish-release:
     name: Publish GitHub Release
