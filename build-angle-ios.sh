@@ -151,8 +151,8 @@ for FRAMEWORK in $FRAMEWORKS; do
     # Add flattened headers to each framework slice
     for SLICE_DIR in "build/ios/universal/$FRAMEWORK_BASE.xcframework"/*; do
         if [ -d "$SLICE_DIR" ]; then
-            FRAMEWORK_DIR=$(find "$SLICE_DIR" -name "*.framework" -type d)
-            if [ -n "$FRAMEWORK_DIR" ]; then
+            # There can be frameworks inside frameworks, and we should try to handle that
+            for FRAMEWORK_DIR in $(find "$SLICE_DIR" -name "*.framework" -type d); do
                 HEADERS_DIR_TARGET="$FRAMEWORK_DIR/Headers"
                 mkdir -p "$HEADERS_DIR_TARGET"
 
@@ -169,7 +169,7 @@ for FRAMEWORK in $FRAMEWORKS; do
                 fi
 
                 echo "Added headers to $FRAMEWORK_DIR"
-            fi
+            done
         fi
     done
 

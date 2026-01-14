@@ -301,7 +301,7 @@ jobs:
           echo "${{ needs.get-angle-commit.outputs.angle_commit }}" > build/android/commit.txt
 
           # Create zip with contents directly at root
-          cd build
+          cd build/android
           zip -r ../angle-android-arm64.zip arm64
           zip -r ../angle-android-arm.zip arm
           cd ..
