@@ -105,7 +105,8 @@ echo "Syncing ANGLE dependencies with gclient..."
 gclient sync --no-history --with_branch_heads --noprehooks
 
 # run install script
-./build/install-build-deps.sh
+# TODO: oh my god bruh 🥀
+#./build/install-build-deps.sh
 
 echo "ANGLE setup complete!"
 cd ..
