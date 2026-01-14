@@ -256,6 +256,69 @@ jobs:
           path: build/windows/angle-windows-arm64.zip
           retention-days: 7
 
+  build-android:
+    name: Build ANGLE for macOS
+    needs: [get-angle-commit]
+    # Only run if release doesn't exist
+    if: needs.get-angle-commit.outputs.release_exists == 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install --upgrade certifi
+
+      - name: Make Scripts Executable
+        run: |
+          chmod +x setup-angle-ubuntu.sh
+          chmod +x build-angle-android.sh
+
+      - name: Build ANGLE for Android with specific commit
+        env:
+          ANGLE_COMMIT: ${{ needs.get-angle-commit.outputs.angle_commit }}
+        run: |
+          echo "Building ANGLE for Android with commit: $ANGLE_COMMIT"
+          ./build-angle-android.sh
+
+      - name: Check Build Output
+        run: |
+          ls -la build/android/arm64/lib/
+          ls -la build/android/arm64/include/
+          ls -la build/android/arm/lib/
+          ls -la build/android/arm/include/
+
+      - name: Create Android Archive
+        run: |
+          # Create commit.txt file with the ANGLE commit hash
+          echo "${{ needs.get-angle-commit.outputs.angle_commit }}" > build/android/commit.txt
+
+          # Create zip with contents directly at root
+          cd build
+          zip -r ../angle-android-arm64.zip arm64
+          zip -r ../angle-android-arm.zip arm
+          cd ..
+
+      - name: Upload Android ARM64 Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: angle-android-arm64
+          path: build/mac/angle-android-arm64.zip
+          retention-days: 7
+
+      - name: Upload Android ARM Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: angle-android-arm
+          path: build/mac/angle-android-arm.zip
+          retention-days: 7
   publish-release:
     name: Publish GitHub Release
     needs: [get-angle-commit, build-mac, build-ios, build-windows]
@@ -312,6 +375,8 @@ jobs:
             "release-assets/angle-ios-universal.zip"
             "release-assets/angle-windows-x64.zip"
             "release-assets/angle-windows-arm64.zip"
+            "release-assets/angle-android-arm64.zip"
+            "release-assets/angle-android-arm.zip"
             "release-assets/commit.txt"
           )
 
@@ -325,5 +390,6 @@ jobs:
             This release provides prebuilt binaries for:
             - macOS (Universal)
             - iOS (ARM64 device + ARM64/x86_64 simulator)
-            - Windows (x64 and ARM64)" \
+            - Windows (x64 and ARM64)
+            - Android (ARM and ARM64)" \
             ${RELEASE_FILES[@]}
