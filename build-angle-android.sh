@@ -55,7 +55,7 @@ gn gen out/android-arm64 --args="
     $COMMON_ARGS
 "
 
-ninja -C out/Android libEGL libGLESv2 libGLESv1_CM
+ninja -C out/android-arm64 libEGL libGLESv2 libGLESv1_CM
 
 # Create new directory structure
 rm -rf ../build/android/arm64/lib
