@@ -69,13 +69,13 @@ gn gen out/android-arm --args="
     target_cpu=\"arm\"
     $COMMON_ARGS
 "
+
 ninja -C out/android-arm libEGL libGLESv2 libGLESv1_CM
 
 # Create new directory structure
 rm -rf ../build/android/arm/lib
 mkdir -p ../build/android/arm/lib
 cp -R out/android-arm/*.so ../build/android/arm/lib/
-
 
 # Build for Android x64
 echo "Building ANGLE for Android x64..."
@@ -98,7 +98,7 @@ cd ..
 # Create header directories for each architecture
 mkdir -p build/android/arm64/include/{EGL,GLES,GLES2,GLES3,KHR}
 mkdir -p build/android/arm/include/{EGL,GLES,GLES2,GLES3,KHR}
-mkdir -p build/android/64/include/{EGL,GLES,GLES2,GLES3,KHR}
+mkdir -p build/android/x64/include/{EGL,GLES,GLES2,GLES3,KHR}
 
 # Copy headers to each architecture directory
 cp -R angle/include/EGL/*.h build/android/arm64/include/EGL/
