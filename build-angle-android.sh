@@ -76,7 +76,6 @@ rm -rf ../build/android/arm/lib
 mkdir -p ../build/android/arm/lib
 cp -R out/android-arm/*.so ../build/android/arm/lib/
 
-cd ..
 
 # Build for Android x64
 echo "Building ANGLE for Android x64..."
@@ -92,6 +91,9 @@ ninja -C out/android-x64 libEGL libGLESv2 libGLESv1_CM
 rm -rf ../build/android/x64/lib
 mkdir -p ../build/android/x64/lib
 cp -R out/android-x64/*.so ../build/android/x64/lib/
+
+# Builds are done!
+cd ..
 
 # Create header directories for each architecture
 mkdir -p build/android/arm64/include/{EGL,GLES,GLES2,GLES3,KHR}
