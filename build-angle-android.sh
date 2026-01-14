@@ -7,7 +7,7 @@ cd "$SCRIPT_DIR"
 
 # Setup ANGLE if needed
 if [ ! -d "angle" ]; then
-    source ./setup-angle-mac.sh
+    source ./setup-angle-ubuntu.sh
 else
     # Add depot_tools to PATH
     export PATH="$PATH:$SCRIPT_DIR/depot_tools"
@@ -46,7 +46,7 @@ COMMON_ARGS='
     angle_enable_trace=false
 '
 
-# Build for macOS ARM64
+# Build for Android ARM64
 echo "Building ANGLE for Android ARM64..."
 gn gen out/android-arm64 --args="
     target_os=\"android\"
@@ -64,8 +64,8 @@ cp -R out/android-arm64/*.so ../build/android/arm64/lib/
 # Build for Android ARM
 echo "Building ANGLE for Android ARM..."
 gn gen out/android-arm --args="
-    target_os=\"mac\"
-    target_cpu=\"x64\"
+    target_os=\"android\"
+    target_cpu=\"arm\"
     $COMMON_ARGS
 "
 ninja -C out/android-arm libEGL libGLESv2 libGLESv1_CM
@@ -94,5 +94,5 @@ cp -R angle/include/KHR/*.h build/android/arm/include/KHR/
 
 echo "Android builds complete! Libraries are available in:"
 echo "  - build/android/arm64/lib (for arm64)"
-echo "  - build/mac/arm/lib (for arm)"
+echo "  - build/android/arm/lib (for arm)"
 echo "Headers are included in the include directory within each build folder."

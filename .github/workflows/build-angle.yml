@@ -257,7 +257,7 @@ jobs:
           retention-days: 7
 
   build-android:
-    name: Build ANGLE for macOS
+    name: Build ANGLE for Android
     needs: [get-angle-commit]
     # Only run if release doesn't exist
     if: needs.get-angle-commit.outputs.release_exists == 'false'
@@ -310,18 +310,18 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: angle-android-arm64
-          path: build/mac/angle-android-arm64.zip
+          path: build/android/angle-android-arm64.zip
           retention-days: 7
 
       - name: Upload Android ARM Archive
         uses: actions/upload-artifact@v4
         with:
           name: angle-android-arm
-          path: build/mac/angle-android-arm.zip
+          path: build/android/angle-android-arm.zip
           retention-days: 7
   publish-release:
     name: Publish GitHub Release
-    needs: [get-angle-commit, build-mac, build-ios, build-windows]
+    needs: [get-angle-commit, build-mac, build-ios, build-windows, build-android]
     runs-on: ubuntu-latest
     # Run on schedule, manual triggers, or push to main (but not PRs)
     # And only if the release doesn't already exist
