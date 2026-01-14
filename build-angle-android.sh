@@ -76,6 +76,8 @@ rm -rf ../build/android/arm/lib
 mkdir -p ../build/android/arm/lib
 cp -R out/android-arm/*.so ../build/android/arm/lib/
 
+cd ..
+
 # Create header directories for each architecture
 mkdir -p build/android/arm64/include/{EGL,GLES,GLES2,GLES3,KHR}
 mkdir -p build/android/arm/include/{EGL,GLES,GLES2,GLES3,KHR}
