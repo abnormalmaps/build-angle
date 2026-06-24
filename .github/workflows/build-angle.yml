@@ -231,7 +231,7 @@ jobs:
           dir build\windows\arm64\include
 
       - name: Create Windows Archives
-        shell: powershell
+        shell: pwsh
         run: |
           # Create commit.txt files with the ANGLE commit hash
           Set-Content -Path "build\windows\x64\commit.txt" -Value "${{ needs.get-angle-commit.outputs.angle_commit }}"
