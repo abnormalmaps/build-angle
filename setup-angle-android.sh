@@ -59,7 +59,7 @@ export PATH="$PATH:$SCRIPT_DIR/depot_tools"
 # Clone or update ANGLE
 if [ ! -d "angle" ]; then
     echo "Cloning ANGLE repository..."
-    git clone --depth 1 https://chromium.googlesource.com/angle/angle
+    git clone --depth 1 https://github.com/abnormalmaps/angle.git
 
     # Checkout specific commit if provided
     if [ ! -z "$ANGLE_COMMIT" ]; then

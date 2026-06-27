@@ -52,7 +52,7 @@ jobs:
         id: get-commit
         run: |
           # Clone just enough of the ANGLE repo to get the latest commit
-          git clone --depth 1 https://chromium.googlesource.com/angle/angle temp-angle
+          git clone --depth 1 https://github.com/abnormalmaps/angle.git temp-angle
           cd temp-angle
           ANGLE_COMMIT=$(git rev-parse HEAD)
           ANGLE_COMMIT_SHORT=$(git rev-parse --short HEAD)

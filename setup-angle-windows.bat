@@ -68,7 +68,7 @@ set PATH=%SCRIPT_DIR%depot_tools;%PATH%
 :: Clone or update ANGLE
 if not exist angle (
     echo Cloning ANGLE repository...
-    git clone --depth 1 https://chromium.googlesource.com/angle/angle
+    git clone --depth 1 https://github.com/abnormalmaps/angle.git
 
     :: Checkout specific commit if provided
     if defined ANGLE_COMMIT_TO_USE (
