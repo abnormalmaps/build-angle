@@ -61,8 +61,6 @@ rm -rf ../build/mac/arm64/lib
 mkdir -p ../build/mac/arm64/lib
 cp -R out/mac-release-arm64/*.dylib ../build/mac/arm64/lib/
 
-# Patch dylib names so that they get loaded locally
-install_name_tool -change libGLESv1_CM.dylib @loader_path/libGLESv1_CM.dylib libEGL.dylib
 
 # Build for macOS x86_64
 echo "Building ANGLE for macOS x86_64..."
@@ -99,6 +97,9 @@ for DYLIB in $DYLIBS; do
     # Fix install name if needed
     install_name_tool -id "@rpath/$DYLIB" "build/mac/universal/lib/$DYLIB"
 done
+
+# Patch dylib names so that they get loaded locally
+install_name_tool -change libGLESv2.dylib @loader_path/libGLESv2.dylib build/mac/universal/lib/libGLESv1_CM.dylib
 
 # Copy headers for all architectures
 echo "Copying headers..."
