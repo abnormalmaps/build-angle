@@ -99,9 +99,9 @@ for DYLIB in $DYLIBS; do
 done
 
 # Patch dylib names so that they get loaded locally
-install_name_tool -change libGLESv2.dylib @loader_path/libGLESv2.dylib build/mac/arm64/lib/libGLESv1_CM.dylib
-install_name_tool -change libGLESv2.dylib @loader_path/libGLESv2.dylib build/mac/x86_64/lib/libGLESv1_CM.dylib
-install_name_tool -change libGLESv2.dylib @loader_path/libGLESv2.dylib build/mac/universal/lib/libGLESv1_CM.dylib
+install_name_tool -change ./libGLESv2.dylib @loader_path/libGLESv2.dylib build/mac/arm64/lib/libGLESv1_CM.dylib
+install_name_tool -change ./libGLESv2.dylib @loader_path/libGLESv2.dylib build/mac/x86_64/lib/libGLESv1_CM.dylib
+install_name_tool -change ./libGLESv2.dylib @loader_path/libGLESv2.dylib build/mac/universal/lib/libGLESv1_CM.dylib
 
 # Copy headers for all architectures
 echo "Copying headers..."
